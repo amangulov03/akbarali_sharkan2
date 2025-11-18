@@ -10,6 +10,14 @@ function Page2() {
     const [isPlaying, setIsPlaying] = useState(true); // По умолчанию музыка включена
     const audioRef = useRef(new Audio(music));
     const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+    const [scrollY, setScrollY] = useState(0); // ← НОВАЯ СТРОКА
+
+    // ← СЮДА ВСТАВЬ НОВЫЙ useEffect ДЛЯ СКРОЛЛА
+    useEffect(() => {
+        const handleScroll = () => setScrollY(window.scrollY);
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
     useEffect(() => {
         const timer = setTimeout(() => setIsVisible(true), 100);
@@ -81,6 +89,8 @@ function Page2() {
       ease: "easeInOut"
     }}
     className="scroll-arrow"
+    style={{
+            opacity: scrollY < 300 ? 1 : 0,}}
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -123,7 +133,7 @@ function Page2() {
                     viewport={{ once: true, amount: 0.3 }}
                     variants={variants}
                 >
-                    <h1>Урматту коллегалар сиздердерди балдарыбыз Мурза менен Айгулдун уйлонуу улпот тоюна чакырабыз</h1>
+                    <h1>Урматту алтындай болгон болошторум сиздердерди балдарыбыз Мурза менен Айгулдун уйлонуу улпот тоюна чакырабыз</h1>
                     <p>
                         Келип кадырлуу коногубуз болуп кетиниздер
                     </p>
